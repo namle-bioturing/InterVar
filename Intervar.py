@@ -2271,8 +2271,6 @@ def main():
         paras['bs2_snps'] = paras['database_intervar']+'/BS2_hom_het'
         paras['exclude_snps'] = paras['database_intervar']+'/ext.variants'
 
-    # Update database for specific assembly
-    paras['database_locat'] = paras['database_locat']+'/'+str(paras['buildver'])+'/humandb'
 
     paras['lof_genes'] = paras['lof_genes']+'.'+paras['buildver']
     paras['pm1_domain'] = paras['pm1_domain']+'.'+paras['buildver']
