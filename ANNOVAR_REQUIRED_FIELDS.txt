@@ -1,0 +1,420 @@
+================================================================================
+ANNOVAR REQUIRED FIELDS FOR INTERVAR
+================================================================================
+
+This document lists all the fields that ANNOVAR must provide in its output
+for InterVar to function properly. These fields are extracted from the
+ANNOVAR multianno.txt output file.
+
+Source: Intervar.py lines 1811-1813
+
+
+================================================================================
+CATEGORY 1: ALLELE INFORMATION (5 fields)
+================================================================================
+Required for basic variant identification and tracking.
+
+1. Chr
+   - Chromosome number or name (1-22, X, Y, MT)
+   - Example: 1, 2, X, chr1
+   - Used by: All criteria (basic variant identification)
+
+2. Start
+   - Start position of variant (1-based coordinate)
+   - Example: 948921
+   - Used by: All criteria, PS1 (checking known pathogenic positions)
+
+3. End
+   - End position of variant (1-based coordinate)
+   - Example: 948921
+   - Used by: All criteria, PS1 (checking known pathogenic positions)
+
+4. Ref
+   - Reference allele
+   - Example: A, T, G, C, ATCG (for indels)
+   - Used by: All criteria, PS1, PM5 (amino acid change comparison)
+
+5. Alt
+   - Alternate/variant allele
+   - Example: G, -, ATCG
+   - Used by: All criteria, PS1, PM5 (amino acid change comparison)
+
+
+================================================================================
+CATEGORY 2: POPULATION FREQUENCY FIELDS (10 fields)
+================================================================================
+Required for BA1, BS1, PM2 (population frequency-based criteria).
+
+6. 1000g2015aug_all
+   - Allele frequency in 1000 Genomes Project (August 2015)
+   - Range: 0.0 to 1.0 or "." (absent)
+   - Used by: BA1 (>5%), BS1 (>1%), PM2 (<0.5%)
+   - ACMG Criteria: BA1, BS1, PM2
+
+7. esp6500siv2_all
+   - Allele frequency in NHLBI Exome Sequencing Project (6500 samples)
+   - Range: 0.0 to 1.0 or "." (absent)
+   - Used by: BA1 (>5%), BS1 (>1%), PM2 (<0.5%)
+   - ACMG Criteria: BA1, BS1, PM2
+
+8. gnomAD_genome_ALL
+   - Overall allele frequency in gnomAD genomes (all populations)
+   - Range: 0.0 to 1.0 or "." (absent)
+   - Used by: BA1 (>5%), BS1 (>1%), PM2 (<0.5%)
+   - ACMG Criteria: BA1, BS1, PM2
+
+9. gnomAD_genome_AFR
+   - Allele frequency in gnomAD African/African-American population
+   - Range: 0.0 to 1.0 or "." (absent)
+   - Used by: BA1, BS1, PM2, BS2 (population-specific frequencies)
+   - ACMG Criteria: BA1, BS1, BS2, PM2
+
+10. gnomAD_genome_AMR
+    - Allele frequency in gnomAD Latino/Admixed American population
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+11. gnomAD_genome_EAS
+    - Allele frequency in gnomAD East Asian population
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+12. gnomAD_genome_FIN
+    - Allele frequency in gnomAD Finnish population
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+13. gnomAD_genome_NFE
+    - Allele frequency in gnomAD Non-Finnish European population
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+14. gnomAD_genome_OTH
+    - Allele frequency in gnomAD Other populations
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+15. gnomAD_genome_ASJ
+    - Allele frequency in gnomAD Ashkenazi Jewish population
+    - Range: 0.0 to 1.0 or "." (absent)
+    - Used by: BA1, BS1, PM2, BS2
+    - ACMG Criteria: BA1, BS1, BS2, PM2
+
+
+================================================================================
+CATEGORY 3: GENE ANNOTATION FIELDS (4 fields)
+================================================================================
+Required for gene identification and OMIM matching.
+
+16. Gene
+    - Gene name from RefSeq annotation
+    - Example: BRCA1, TP53, CFTR
+    - Used by: PVS1 (LOF gene check), PP2, BP1, PM2 (OMIM match)
+    - ACMG Criteria: PVS1, PP2, BP1, PM2
+
+17. Gene.ensGene
+    - Gene name from Ensembl annotation
+    - Example: BRCA1, TP53, CFTR
+    - Used by: PM2 (alternative OMIM match), cross-validation
+    - ACMG Criteria: PM2
+
+18. Func.refGene
+    - Functional region annotation
+    - Values: exonic, intronic, splicing, UTR5, UTR3, intergenic, etc.
+    - Used by: PVS1, PS1, PM4, PP2, PP3, BP3, BP7
+    - ACMG Criteria: PVS1, PS1, PM4, PP2, PP3, BP3, BP7
+
+19. ExonicFunc.refGene
+    - Exonic function annotation
+    - Values: nonsynonymous SNV, synonymous SNV, stopgain, stoploss,
+              frameshift deletion, frameshift insertion, nonframeshift deletion,
+              nonframeshift insertion
+    - Used by: PVS1, PS1, PM4, PP2, PP3, BP1, BP3, BP7
+    - ACMG Criteria: PVS1, PS1, PM4, PP2, PP3, BP1, BP3, BP7
+
+
+================================================================================
+CATEGORY 4: AMINO ACID CHANGE FIELDS (3 fields)
+================================================================================
+Required for PS1, PM5 (pathogenic amino acid substitution criteria).
+
+20. AAChange.refGene
+    - Amino acid change annotation from RefSeq
+    - Format: GeneName:TranscriptID:exon#:c.cDNA_change:p.protein_change
+    - Example: BRCA1:NM_007294:exon10:c.C2912T:p.R971W
+    - Used by: PS1 (same AA change), PM5 (different AA same position), PVS1
+    - ACMG Criteria: PVS1, PS1, PM5
+
+21. AAChange.ensGene
+    - Amino acid change annotation from Ensembl
+    - Format: Same as AAChange.refGene
+    - Used by: Cross-validation with RefSeq annotation
+    - ACMG Criteria: PS1, PM5
+
+22. AAChange.knownGene
+    - Amino acid change annotation from UCSC Known Genes
+    - Format: Same as AAChange.refGene
+    - Used by: PVS1 (3' end position check), cross-validation
+    - ACMG Criteria: PVS1
+
+
+================================================================================
+CATEGORY 5: COMPUTATIONAL PREDICTION FIELDS (6 fields)
+================================================================================
+Required for PP3, BP4 (computational evidence criteria).
+
+23. SIFT_score
+    - SIFT (Sorting Intolerant From Tolerant) prediction score
+    - Range: 0.0 to 1.0 (lower = more deleterious)
+    - Cutoff: <0.05 considered deleterious
+    - Used by: PP3 (deleterious), BP4 (benign)
+    - ACMG Criteria: PP3, BP4
+    - Note: Currently replaced by MetaSVM_score in implementation
+
+24. MetaSVM_score
+    - MetaSVM ensemble prediction score
+    - Range: -2.0 to 3.0 (higher = more deleterious)
+    - Cutoff: >0.0 considered deleterious
+    - Used by: PP3 (deleterious), BP4 (benign)
+    - ACMG Criteria: PP3, BP4
+
+25. CADD_raw
+    - CADD (Combined Annotation Dependent Depletion) raw score
+    - Range: negative to positive values
+    - Higher scores indicate more deleterious variants
+    - Used by: Output reporting, general deleteriousness assessment
+    - ACMG Criteria: PP3 (indirectly)
+
+26. CADD_phred
+    - CADD Phred-scaled score
+    - Range: 0 to ~50+ (higher = more deleterious)
+    - Score of 10 = top 10% deleterious, 20 = top 1%, 30 = top 0.1%
+    - Used by: Output reporting, general deleteriousness assessment
+    - ACMG Criteria: PP3 (indirectly)
+
+27. GERP++_RS
+    - GERP++ Rejected Substitution score (evolutionary conservation)
+    - Range: -12.3 to 6.17 (higher = more conserved)
+    - Cutoff: >2.0 considered conserved
+    - Used by: PP3 (conserved = deleterious), BP4 (not conserved = benign)
+    - ACMG Criteria: PP3, BP4, BP7
+
+28. phyloP46way_placental
+    - PhyloP conservation score (46 placental mammals)
+    - Range: negative to positive (higher = more conserved)
+    - Cutoff: >1.6 considered conserved
+    - Used by: PP3, BP4 (currently commented out, replaced by GERP++)
+    - ACMG Criteria: PP3, BP4
+    - Note: Not actively used in current version
+
+
+================================================================================
+CATEGORY 6: SPLICING PREDICTION FIELDS (2 fields)
+================================================================================
+Required for PVS1, PS1, PP3, BP7 (splice-altering criteria).
+
+29. dbscSNV_ADA_SCORE
+    - dbscSNV AdaBoost splice prediction score
+    - Range: 0.0 to 1.0 (higher = more likely splice-altering)
+    - Cutoff: >0.6 considered splice-altering
+    - Used by: PVS1, PS1, PP3 (splice damage), BP7 (no splice damage)
+    - ACMG Criteria: PVS1, PS1, PP3, BP7
+
+30. dbscSNV_RF_SCORE
+    - dbscSNV Random Forest splice prediction score
+    - Range: 0.0 to 1.0 (higher = more likely splice-altering)
+    - Cutoff: >0.6 considered splice-altering
+    - Used by: PVS1, PS1, PP3 (splice damage), BP7 (no splice damage)
+    - ACMG Criteria: PVS1, PS1, PP3, BP7
+
+
+================================================================================
+CATEGORY 7: PROTEIN DOMAIN FIELD (1 field)
+================================================================================
+Required for PM1 (critical domain criteria).
+
+31. Interpro_domain
+    - InterPro protein domain annotation
+    - Format: Domain name or identifier
+    - Example: Zinc finger, Kinase domain, BRCT domain
+    - Used by: PM1 (variant in critical domain without benign variation)
+    - ACMG Criteria: PM1, BP3
+
+
+================================================================================
+CATEGORY 8: REPEAT REGIONS FIELD (1 field)
+================================================================================
+Required for PM4, BP3 (repeat region criteria).
+
+32. rmsk
+    - RepeatMasker annotation (repetitive elements)
+    - Values: Repeat family name or "." (not in repeat)
+    - Example: LINE, SINE, LTR, Simple_repeat, Low_complexity
+    - Used by: PM4 (protein length changes), BP3 (in-frame indels in repeats)
+    - ACMG Criteria: PM4, BP3
+
+
+================================================================================
+CATEGORY 9: CLINVAR FIELDS (4 fields)
+================================================================================
+Required for PP5, BP6 (ClinVar evidence criteria).
+
+33. CLINSIG
+    - ClinVar clinical significance
+    - Values: Pathogenic, Likely_pathogenic, Uncertain_significance,
+              Likely_benign, Benign, or combinations
+    - Used by: PP5 (reported pathogenic), BP6 (reported benign)
+    - ACMG Criteria: PP5, BP6
+
+34. CLNDBN
+    - ClinVar disease name
+    - Format: Disease/phenotype name
+    - Used by: Cross-reference with OMIM phenotypes
+    - ACMG Criteria: PP5, BP6 (context)
+
+35. CLNACC
+    - ClinVar accession number
+    - Format: RCV########
+    - Used by: Tracking ClinVar submissions
+    - ACMG Criteria: PP5, BP6 (tracking)
+
+36. CLNDSDB
+    - ClinVar disease database
+    - Values: MedGen, OMIM, Orphanet identifiers
+    - Used by: Cross-reference with disease databases
+    - ACMG Criteria: PP5, BP6 (context)
+
+
+================================================================================
+CATEGORY 10: VARIANT IDENTIFIER FIELD (1 field)
+================================================================================
+Required for variant tracking.
+
+37. avsnp147
+    - dbSNP identifier (rsID) from build 147
+    - Format: rs# or "." (novel variant)
+    - Example: rs1801133, rs429358
+    - Used by: Variant identification and literature search
+    - ACMG Criteria: PS4 (prevalence studies), general tracking
+
+
+================================================================================
+CATEGORY 11: LOSS-OF-FUNCTION PREDICTION FIELDS (2 fields)
+================================================================================
+Used for advanced functional predictions.
+
+38. LoFtool_percentile
+    - LoFtool gene-level loss-of-function intolerance score
+    - Range: 0 to 100 (lower = more intolerant to LoF)
+    - Used by: Gene-level tolerance assessment (not actively used)
+    - ACMG Criteria: PVS1 (context)
+
+39. Gene damage prediction (all disease-causing genes)
+    - Gene damage index or prediction
+    - Used by: PS3 (functional studies), BS3 (functional studies)
+    - ACMG Criteria: PS3, BS3
+    - Note: May not be present in standard ANNOVAR output
+
+
+================================================================================
+CATEGORY 12: OPTIONAL FIELD (1 field)
+================================================================================
+
+40. Otherinfo (or Otherinfo1)
+    - Additional information from input file (5th column onwards)
+    - Content: User-defined fields from original input
+    - Example: Sample genotype, depth, quality scores, clinical notes
+    - Used by: Passing through user data to output
+    - Controlled by: otherinfo=TRUE in config.ini
+
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+
+Total fields required: 40 (39 mandatory + 1 optional)
+
+Field Categories:
+- Allele Information: 5 fields
+- Population Frequencies: 10 fields
+- Gene Annotation: 4 fields
+- Amino Acid Changes: 3 fields
+- Computational Predictions: 6 fields
+- Splicing Predictions: 2 fields
+- Protein Domains: 1 field
+- Repeat Regions: 1 field
+- ClinVar: 4 fields
+- Variant ID: 1 field
+- LoF Predictions: 2 fields
+- Optional: 1 field
+
+
+================================================================================
+ANNOVAR DATABASE REQUIREMENTS
+================================================================================
+
+To generate all required fields, ANNOVAR must be run with these databases:
+
+Gene-based annotations:
+- refGene          (Gene, Func.refGene, ExonicFunc.refGene, AAChange.refGene)
+- ensGene          (Gene.ensGene, AAChange.ensGene)
+- knownGene        (AAChange.knownGene)
+
+Filter-based annotations:
+- esp6500siv2_all  (ESP6500 allele frequencies)
+- 1000g2015aug     (1000 Genomes allele frequencies)
+- gnomad_genome    (gnomAD genome frequencies - ALL and population-specific)
+- avsnp147         (dbSNP rsIDs)
+- dbnsfp42a        (SIFT, CADD, GERP++, MetaSVM, LoFtool, phyloP)
+- clinvar_20210501 (CLINSIG, CLNDBN, CLNACC, CLNDSDB)
+- dbscsnv11        (dbscSNV_ADA_SCORE, dbscSNV_RF_SCORE)
+
+Region-based annotations:
+- rmsk             (RepeatMasker)
+
+ANNOVAR command example (from Intervar.py line 550):
+perl table_annovar.pl input.avinput humandb/ \
+  -buildver hg19 \
+  -out output \
+  -protocol refGene,esp6500siv2_all,1000g2015aug_all,avsnp147,dbnsfp42a,\
+            clinvar_20210501,gnomad_genome,dbscsnv11,rmsk,ensGene,knownGene \
+  -operation g,f,f,f,f,f,f,f,r,g,g \
+  -nastring .
+
+
+================================================================================
+FIELD VALUE FORMATS
+================================================================================
+
+Numeric fields: Use "." to indicate missing/absent data
+Text fields: Use "." to indicate missing/absent data
+Frequency fields: 0.0 to 1.0 or "."
+Score fields: May have various ranges, use "." for unavailable
+
+Missing data handling:
+- InterVar checks for "." before attempting numeric conversion
+- ValueError exceptions are caught when scores are unavailable
+- Missing frequency data treated as "absent" for PM2 calculations
+
+
+================================================================================
+CRITICAL NOTES
+================================================================================
+
+1. All ANNOVAR databases must be downloaded before running InterVar
+2. Database versions matter - use recent versions (2015+ recommended)
+3. Field names must match exactly (case-sensitive)
+4. Tab-delimited format required
+5. Header row must be present with exact field names
+6. Missing values represented as "." (period)
+7. Some fields may be empty for certain variant types (e.g., SIFT for indels)
+8. InterVar will fail if critical fields are missing
+
+Generated: 2025-11-07
+Source: InterVar v2.2.2 (2021-07-27)
+Reference: Intervar.py lines 1811-1813
