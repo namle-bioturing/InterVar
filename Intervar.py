@@ -2215,15 +2215,15 @@ def main():
 
 
 
-    config_file = os.path.join(os.path.dirname(__file__),"config.ini") 
-    if os.path.isfile(config_file):
-        config.read(config_file)
-        sections = config.sections()
-        for section in sections:
-            ConfigSectionMap(config,section)    
-    else:
-        print("Error: The default configure file of [ config.ini ] is not here, exit! Please redownload the InterVar.")
-        sys.exit()
+    # config_file = os.path.join(os.path.dirname(__file__),"config.ini") 
+    # if os.path.isfile(config_file):
+    #     config.read(config_file)
+    #     sections = config.sections()
+    #     for section in sections:
+    #         ConfigSectionMap(config,section)    
+    # else:
+    #     print("Error: The default configure file of [ config.ini ] is not here, exit! Please redownload the InterVar.")
+    #     sys.exit()
 
 #begin to process user's options:
     if options.config != None:
